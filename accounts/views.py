@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .forms import RegistrationForm
@@ -18,3 +19,8 @@ def register(request):
 
 def registration_success(request):
     return render(request, 'accounts/registration_success.html')
+
+
+@login_required
+def dashboard(request):
+    return render(request, 'accounts/dashboard.html')
