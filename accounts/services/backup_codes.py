@@ -19,7 +19,7 @@ def _hash_code(user_id, code):
 
 
 @transaction.atomic
-def generate_backup_codes(user, count=5):
+def generate_backup_codes(user, count=10):
     codes = [
         secrets.token_hex(16)
         for _ in range(count)

@@ -23,3 +23,20 @@ class GenerateBackupCodesForm(forms.Form):
         label='Confirm password',
         widget=forms.PasswordInput,
     )
+
+class BackupRecoveryForm(forms.Form):
+    username = forms.CharField(
+        max_length=150,
+    )
+    code = forms.CharField(
+        max_length=32,
+        min_length=32,
+        label='Backup code',
+        widget=forms.TextInput(
+            attrs={
+                'autocomplete': 'off',
+                'spellcheck': 'false',
+            }
+        ),
+    )
+    

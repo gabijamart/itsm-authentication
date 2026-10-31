@@ -21,10 +21,14 @@ def invalidate_user_sessions(user_ids):
         pending_user = str(
             data.get('pending_user_id', '')
         )
+        recovery_user = str(
+            data.get('recovery_user_id', '')
+        )
 
         if (
             authenticated_user in user_ids
             or pending_user in user_ids
+            or recovery_user in user_ids
         ):
             session_keys.append(session.session_key)
 

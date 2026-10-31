@@ -38,11 +38,6 @@ urlpatterns = [
         name='backup_codes_setup',
     ),
     path(
-        'verify-backup-code/',
-        views.verify_backup_code_view,
-        name='verify_backup_code',
-    ),
-    path(
         'password-reset/',
         ratelimit(
             key='ip',
@@ -75,10 +70,7 @@ urlpatterns = [
     ),
     path(
         'password-reset/confirm/<uidb64>/<token>/',
-        auth_views.PasswordResetConfirmView.as_view(
-            template_name='accounts/password_reset_confirm.html',
-            success_url='/password-reset/complete/',
-        ),
+        views.SecurePasswordResetConfirmView.as_view(),
         name='password_reset_confirm',
     ),
     path(
@@ -87,5 +79,15 @@ urlpatterns = [
             template_name='accounts/password_reset_complete.html',
         ),
         name='password_reset_complete',
+    ),
+    path(
+    'login/backup/',
+    views.backup_recovery_view,
+    name='backup_recovery',
+    ),
+    path(
+        'login/backup/set-password/',
+        views.recovery_set_password_view,
+        name='recovery_set_password',
     ),
 ]
