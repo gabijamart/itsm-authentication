@@ -1,0 +1,19 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Backup Codes | SecureAuth{% endblock %}
+
+{% block content %}
+<h1>Backup codes</h1>
+<p>
+    Confirm your password to generate five new backup codes.
+    Previously generated codes will be invalidated.
+</p>
+
+<form method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit'>Generate backup codes</button>
+</form>
+
+<p><a href='{% url 'dashboard' %}'>Back to dashboard</a></p>
+{% endblock %}

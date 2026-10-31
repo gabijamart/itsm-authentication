@@ -1,0 +1,16 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Verify Backup Code | SecureAuth{% endblock %}
+
+{% block content %}
+<h1>Verify your identity</h1>
+<p>Enter one of your unused backup authentication codes.</p>
+
+<form method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit'>Verify code</button>
+</form>
+
+<p><a href='{% url 'login' %}'>Back to login</a></p>
+{% endblock %}

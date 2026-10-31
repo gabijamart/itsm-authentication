@@ -1,0 +1,30 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Dashboard | SecureAuth{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ request.user.username }}!</h1>
+<p>You are successfully authenticated.</p>
+
+<h3>Authentication security</h3>
+<p>Remaining backup codes: <strong>{{ remaining }}</strong></p>
+
+{% if remaining <= 2 %}
+<p>
+    You have few backup codes remaining.
+    Generate a new set while you can still
+    sign in with your password.
+</p>
+{% endif %}
+
+<p>
+    <a class='button' href='{% url 'backup_codes_setup' %}'>
+        Generate new backup codes
+    </a>
+</p>
+
+<form method='post' action='{% url 'logout' %}'>
+    {% csrf_token %}
+    <button type='submit'>Logout</button>
+</form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Register | SecureAuth{% endblock %}
+
+{% block content %}
+<h1>Create an account</h1>
+<p>Enter your details to create a secure account.</p>
+
+<form method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit'>Create account</button>
+</form>
+
+<p>
+    Already have an account?
+    <a href='{% url 'login' %}'>Sign in</a>
+</p>
+{% endblock %}

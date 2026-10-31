@@ -1,0 +1,10 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Registration Successful | SecureAuth{% endblock %}
+
+{% block content %}
+<h1>Account created!</h1>
+<p>Your account has been successfully created.</p>
+
+<a class='button' href='{% url 'login' %}'>Go to login</a>
+{% endblock %}

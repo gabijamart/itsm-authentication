@@ -1,0 +1,29 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Login | SecureAuth{% endblock %}
+
+{% block content %}
+<h1>Welcome back</h1>
+<p>Sign in to continue to your account.</p>
+
+<form method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit'>Sign in</button>
+</form>
+
+<p>
+    Don't have an account?
+    <a href='{% url 'register' %}'>Register</a>
+</p>
+<p>
+    <a href='{% url 'backup_recovery' %}'>
+        Recover with backup code
+    </a>
+</p>
+<p>
+    <a href='{% url 'password_reset' %}'>
+        Forgot password?
+    </a>
+</p>
+{% endblock %}
