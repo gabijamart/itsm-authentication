@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Generated Backup Codes</title>
+</head>
+<body>
+    <h1>Your backup codes</h1>
+
+    <p>Save these codes securely. They will not be shown again.</p>
+
+    <ul>
+        {% for code in codes %}
+            <li><code>{{ code }}</code></li>
+        {% endfor %}
+    </ul>
+
+    <p>Each code can be used only once.</p>
+
+    <a href='{% url 'dashboard' %}'>Continue</a>
+</body>
+</html>

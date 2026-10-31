@@ -13,17 +13,23 @@ urlpatterns = [
     ),
     path(
         'login/',
-        auth_views.LoginView.as_view(
-            template_name='accounts/login.html'
-        ),
+        views.SecureLoginView.as_view(),
         name='login',
     ),
     path(
         'logout/',
-        auth_views.LogoutView.as_view(
-            next_page='login'
-        ),
+        auth_views.LogoutView.as_view(next_page='login'),
         name='logout',
     ),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path(
+        'backup-codes/',
+        views.backup_codes_setup,
+        name='backup_codes_setup',
+    ),
+    path(
+        'verify-backup-code/',
+        views.verify_backup_code_view,
+        name='verify_backup_code',
+    ),
 ]

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Verify Backup Code</title>
+</head>
+<body>
+    <h1>Backup code verification</h1>
+
+    <p>Enter one of your unused backup codes.</p>
+    <p>Remaining codes: {{ remaining }}</p>
+
+    <form method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit'>Verify</button>
+    </form>
+</body>
+</html>

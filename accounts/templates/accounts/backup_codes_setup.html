@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Backup Codes</title>
+</head>
+<body>
+    <h1>Generate backup codes</h1>
+
+    <p>Confirm your password to generate new codes.</p>
+    <p>Generating new codes invalidates all previous codes.</p>
+
+    <form method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit'>Generate codes</button>
+    </form>
+
+    <a href='{% url 'dashboard' %}'>Back</a>
+</body>
+</html>
