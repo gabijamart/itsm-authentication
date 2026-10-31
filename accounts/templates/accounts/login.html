@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
+{% extends 'accounts/base.html' %}
 
-    <form method='post'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type='submit'>Login</button>
-    </form>
+{% block title %}Login | SecureAuth{% endblock %}
 
-    <p>
-        Don't have an account?
-        <a href='{% url 'register' %}'>Register</a>
-    </p>
-</body>
-</html>
+{% block content %}
+<h1>Welcome back</h1>
+<p>Sign in to continue to your account.</p>
+
+<form method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit'>Sign in</button>
+</form>
+
+<p>
+    Don't have an account?
+    <a href='{% url 'register' %}'>Register</a>
+</p>
+{% endblock %}

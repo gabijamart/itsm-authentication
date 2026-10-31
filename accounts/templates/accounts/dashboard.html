@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Welcome, {{ request.user.username }}!</h1>
+{% extends 'accounts/base.html' %}
 
-    <p>You are successfully authenticated.</p>
+{% block title %}Dashboard | SecureAuth{% endblock %}
 
-    <p>Remaining backup codes: {{ remaining }}</p>
+{% block content %}
+<h1>Welcome, {{ request.user.username }}!</h1>
+<p>You are successfully authenticated.</p>
 
-    <a href='{% url 'backup_codes_setup' %}'>
-        Manage backup codes
-    </a>
+<h3>Authentication security</h3>
+<p>Remaining backup codes: <strong>{{ remaining }}</strong></p>
 
-    <form method='post' action='{% url 'logout' %}'>
-        {% csrf_token %}
-        <button type='submit'>Logout</button>
-    </form>
-</body>
-</html>
+<a class='button' href='{% url 'backup_codes_setup' %}'>
+    Manage backup codes
+</a>
+
+<form method='post' action='{% url 'logout' %}'>
+    {% csrf_token %}
+    <button type='submit'>Logout</button>
+</form>
+{% endblock %}

@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <title>Registration successful</title>
-</head>
-<body>
-    <h1>Registration successful</h1>
+{% extends 'accounts/base.html' %}
 
-    <p>Your account has been created.</p>
+{% block title %}Registration Successful | SecureAuth{% endblock %}
 
-    <a href='{% url 'login' %}'>Go to login</a>
-</body>
-</html>
+{% block content %}
+<h1>Account created!</h1>
+<p>Your account has been successfully created.</p>
+
+<a class='button' href='{% url 'login' %}'>Go to login</a>
+{% endblock %}
