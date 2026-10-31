@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django_ratelimit.decorators import ratelimit
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
+from .security import backup_code_user_key
 from .forms import (
     BackupCodeForm,
     GenerateBackupCodesForm,
@@ -74,6 +76,18 @@ class SecureLoginView(LoginView):
 
 
 @require_http_methods(['GET', 'POST'])
+@ratelimit(
+    key='ip',
+    rate='30/15m',
+    method='POST',
+    block=True,
+)
+@ratelimit(
+    key=backup_code_user_key,
+    rate='5/15m',
+    method='POST',
+    block=True,
+)
 def verify_backup_code_view(request):
     user_id = request.session.get('pending_user_id')
     started_at = request.session.get('pending_started_at')
@@ -154,6 +168,12 @@ def dashboard(request):
 
 @login_required
 @require_http_methods(['GET', 'POST'])
+@ratelimit(
+    key='user',
+    rate='5/15m',
+    method='POST',
+    block=True,
+)
 def backup_codes_setup(request):
     if request.method == 'POST':
         form = GenerateBackupCodesForm(request.POST)

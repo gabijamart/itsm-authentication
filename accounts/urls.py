@@ -1,3 +1,6 @@
+from django_ratelimit.decorators import ratelimit
+
+from .security import normalized_email_key
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
@@ -13,7 +16,14 @@ urlpatterns = [
     ),
     path(
         'login/',
-        views.SecureLoginView.as_view(),
+        ratelimit(
+            key='ip',
+            rate='30/15m',
+            method='POST',
+            block=True,
+        )(
+            views.SecureLoginView.as_view()
+        ),
         name='login',
     ),
     path(
@@ -33,14 +43,28 @@ urlpatterns = [
         name='verify_backup_code',
     ),
     path(
-    'password-reset/',
-    auth_views.PasswordResetView.as_view(
-        template_name='accounts/password_reset.html',
-        email_template_name='accounts/password_reset_email.txt',
-        subject_template_name='accounts/password_reset_subject.txt',
-        success_url='/password-reset/done/',
-    ),
-    name='password_reset',
+        'password-reset/',
+        ratelimit(
+            key='ip',
+            rate='10/15m',
+            method='POST',
+            block=True,
+        )(
+            ratelimit(
+                key=normalized_email_key,
+                rate='3/15m',
+                method='POST',
+                block=True,
+            )(
+                auth_views.PasswordResetView.as_view(
+                    template_name='accounts/password_reset.html',
+                    email_template_name='accounts/password_reset_email.txt',
+                    subject_template_name='accounts/password_reset_subject.txt',
+                    success_url='/password-reset/done/',
+                )
+            )
+        ),
+        name='password_reset',
     ),
     path(
         'password-reset/done/',
