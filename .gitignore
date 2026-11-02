@@ -6,3 +6,6 @@ db.sqlite3
 .vscode/
 .pytest_cache/
 sent_emails/
+.env
+.env.*
+!.env.example
