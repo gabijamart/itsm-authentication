@@ -11,6 +11,13 @@ from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 from django_ratelimit.decorators import ratelimit
+from django.urls import reverse_lazy
+
+from django.contrib.auth.views import (
+    LoginView,
+    PasswordChangeView,
+    PasswordResetConfirmView,
+)
 
 from .forms import (
     BackupRecoveryForm,
@@ -55,8 +62,26 @@ def registration_success(request):
 
 class SecureLoginView(LoginView):
     template_name = 'accounts/login.html'
+    
 
+class SecurePasswordChangeView(PasswordChangeView):
+    template_name = 'accounts/password_change.html'
+    success_url = reverse_lazy('password_change_done')
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        BackupCode.objects.filter(
+            user=self.request.user,
+        ).delete()
+
+        logger.info(
+            'Password changed for user_id=%s',
+            self.request.user.pk,
+        )
+
+        return response
+    
 
 @login_required
 def dashboard(request):
